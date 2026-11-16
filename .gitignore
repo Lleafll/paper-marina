@@ -1,0 +1,6 @@
+# Derived outputs: fully reproducible from sources/ by running the pipeline.
+data/processed/
+
+.venv/
+__pycache__/
+*.pyc

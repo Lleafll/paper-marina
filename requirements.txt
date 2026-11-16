@@ -1,0 +1,4 @@
+# scipy.io.loadmat reads Kool's MATLAB v5 .mat files; numpy comes with it.
+# Everything else uses the standard library only.
+numpy
+scipy
