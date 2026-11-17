@@ -21,6 +21,7 @@ are kept as they are on the share, so this copy can be diffed against it.
 | `Files_with_wrong_SubjID/` | 26 | originals with mistyped IDs; `README.txt` documents each fix; `Corrected/` holds renamed copies |
 | `Participants_with_4_Sessions/` | 3 | two discarded repeat sessions (6582 s2, 26416 s1), plus a README |
 | `Training/` | 290 | practice-run logfiles from before session 1 |
+| `final_sample/Participant characteristics.sav` | 1 | the lab's final list of the 98 analysed participants (demographics, fitted parameters, stay probabilities), copied 17 Nov 2026 from `P:\030\Analysis\2-step gender\Repository\` |
 
 Left on the share on purpose: `all_data_sync/` (a sync copy of everything, 1,203
 files), `_SYNCAPP/` (sync-tool metadata), `Files_without_Timestamp/` (short-name
@@ -84,8 +85,9 @@ behavioural analysis, so the exclusions still have to be applied.
   (`00007729` misses ~100 in all three sessions). These are likely the paper's
   "task-unresponsive" exclusions.
 
-## Next step
+## Extraction
 
-Implement `write_trials()` in `src/extract_gilger.py` from the coding above so it
-emits `data/processed/gilger_trials.csv`; `src/harmonize.py` picks that up. The
-condition column stays empty until the unblinding key is available.
+`src/extract_gilger.py` turns these files into `data/processed/gilger_*.csv`, and
+`src/validate.py` re-checks everything above on every run. The exclusion analysis
+(5 of 5 unresponsive participants reproduced; 110 rather than 107 completers) is in
+`docs/codebook_gilger.md`.

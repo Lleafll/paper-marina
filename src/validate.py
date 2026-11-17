@@ -410,6 +410,55 @@ def validate_transition_consistency(dataset: str) -> None:
           f"{len(degenerate)} subject(s) share one" if degenerate else "distinct")
 
 
+def validate_gilger_logfiles() -> None:
+    """Each study-030 logfile against the design in the paper and against itself.
+
+    The reward check is the strong one: the task pre-draws every outcome
+    (`rewprob`), so the received reward must equal the draw for the chosen
+    (state, option) -- a mis-decoded state or choice index breaks it.
+    """
+    sessions = [r for r in read_csv("gilger_sessions.csv") if r["status"] == "used"]
+    if not sessions:
+        return
+    off = [r["file"] for r in sessions
+           if r["n_trials"] != "201" or float(r["common_p"]) != 0.7 or r["aborted"] != "0"]
+    check("gilger: every session has 201 trials, p(common) = 0.7, not aborted",
+          not off, f"{len(off)} off: {off[:3]}" if off else f"{len(sessions)} sessions")
+    walks = [r["file"] for r in sessions if r["walks_in_bounds"] != "1"]
+    check("gilger: reward probabilities stay within [0.25, 0.75]", not walks,
+          f"{len(walks)} outside" if walks else "all sessions")
+    reward = sum(int(r["bad_reward"]) for r in sessions)
+    check("gilger: reward equals the pre-drawn outcome of the chosen option",
+          reward == 0, f"{reward} mismatched trials" if reward else "0 mismatches")
+    trans = sum(int(r["bad_transition"]) for r in sessions)
+    check("gilger: `trans` matches the randCWS transition counterbalancing",
+          trans == 0, f"{trans} mismatched trials" if trans else "0 mismatches")
+
+    # The paper: 5 of the 107 completers excluded for > 30% missing trials in at
+    # least one session. Counting a trial as missing if either stage timed out gives
+    # exactly 5; counting stage-1 timeouts only would give 2.
+    subjects = read_csv("gilger_subjects.csv")
+    excluded = [r["subject_id"] for r in subjects if r["excl_unresponsive"] == "1"]
+    check("gilger: > 30% missed trials excludes 5 participants, as published",
+          len(excluded) == 5, ", ".join(excluded))
+
+    # The lab's final list must be a subset of the completers that leaves out every
+    # unresponsive one, and its trial table must hold exactly 98 x 3 x 201 trials.
+    final = {r["subject_id"] for r in subjects if r["in_final_sample"] == "1"}
+    completers = {r["subject_id"] for r in subjects if r["completer"] == "1"}
+    check("gilger: the final sample is 98 completers, none of them unresponsive",
+          len(final) == 98 and final <= completers and not final & set(excluded),
+          f"{len(final)} subjects, {len(completers - final)} completers left out")
+    trials = read_csv("gilger_trials_final_sample.csv")
+    per_session = defaultdict(int)
+    for r in trials:
+        per_session[(r["subject_id"], r["session"])] += 1
+    complete = ({s for s, _ in per_session} == final and len(per_session) == 3 * len(final)
+                and set(per_session.values()) == {201})
+    check("gilger: the final-sample trial table is every final subject x 3 sessions x 201",
+          complete, f"{len(trials):,} trials, {len(per_session)} sessions")
+
+
 # ---------------------------------------------------------------------------
 # 7. Structural checks on the harmonized table
 # ---------------------------------------------------------------------------
@@ -548,6 +597,7 @@ def main() -> int:
         validate_gillan_timeout_blanking(study)
     for dataset in ("kool_daw", "gillan_study1", "gillan_study2", "gilger"):
         validate_transition_consistency(dataset)
+    validate_gilger_logfiles()
     validate_structure()
     report_cross_dataset_notes()
 

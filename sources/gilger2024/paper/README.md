@@ -6,7 +6,7 @@ It checks for them and prints what is missing instead of failing.
 | file | status | where to get it |
 |---|---|---|
 | `gilger2024-jpsychopharmacol.pdf` | **present** | <https://journals.sagepub.com/doi/pdf/10.1177/02698811231216325> (open access), or the PDF link on <https://pmc.ncbi.nlm.nih.gov/articles/PMC10863371/> |
-| `gilger2024-supplemental.pdf` | **missing** | <https://journals.sagepub.com/doi/10.1177/02698811231216325> → "Supplementary Materials" → `sj-pdf-1-jop-10.1177_02698811231216325.pdf` |
+| `gilger2024-supplemental.pdf` | **present** (added 17 Nov 2026) | <https://journals.sagepub.com/doi/10.1177/02698811231216325> → "Supplementary Materials" → `sj-pdf-1-jop-10.1177_02698811231216325.pdf` |
 
 `fulltext.xml` is the complete CC-BY full text from EuropePMC and *is* fetched
 automatically, so the article's text is available here either way. What the XML does
@@ -28,5 +28,8 @@ The estimator is what decides whether this paper's `omega` can be compared again
 Kool's `w` at all, so it is the single most useful missing fact in the project. See
 `docs/compatibility.md`.
 
-Once the supplement is here, read it and fill in the estimator in
-`docs/codebook_gilger.md`.
+**Read, and the estimator is not there either.** The 18-page supplement covers
+recruitment, the exclusion criteria (the same wording as the Methods), demographics,
+genotyping, the amino-acid mixture, blood tryptophan levels and the model equations,
+but it never says how the parameters were fitted. That still has to come from the
+authors.

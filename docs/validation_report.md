@@ -5,7 +5,7 @@ correct value is known independently of this repository -- the authors' own
 MATLAB output for Kool, the published factor scores for Gillan -- so a mistake
 in a column mapping shows up as a numeric mismatch rather than passing quietly.
 
-**51 checks, 0 failed.**
+**60 checks, 0 failed.**
 
 - **PASS** kool_daw: analysed-subject count matches groupdata.i -- 197 vs 197
 - **PASS** kool_daw: 4 stay probabilities per subject == groupdata.stayprobs -- max |diff| = 0 over 788 values
@@ -38,7 +38,16 @@ in a column mapping shows up as a numeric mismatch rather than passing quietly.
 - **PASS** gillan_study1: the two first-stage options have different common states -- distinct
 - **PASS** gillan_study2: transition type is determined by (s1_choice, s2_state) -- holds for all 1711 subjects
 - **PASS** gillan_study2: the two first-stage options have different common states -- distinct
-- **PASS** harmonized table is non-empty -- 522,824 rows
+- **PASS** gilger: transition type is determined by (s1_choice, s2_state) -- holds for all 153 subjects
+- **PASS** gilger: the two first-stage options have different common states -- distinct
+- **PASS** gilger: every session has 201 trials, p(common) = 0.7, not aborted -- 387 sessions
+- **PASS** gilger: reward probabilities stay within [0.25, 0.75] -- all sessions
+- **PASS** gilger: reward equals the pre-drawn outcome of the chosen option -- 0 mismatches
+- **PASS** gilger: `trans` matches the randCWS transition counterbalancing -- 0 mismatches
+- **PASS** gilger: > 30% missed trials excludes 5 participants, as published -- 00006649, 00007729, 00009117, 00009935, 00011494
+- **PASS** gilger: the final sample is 98 completers, none of them unresponsive -- 98 subjects, 12 completers left out
+- **PASS** gilger: the final-sample trial table is every final subject x 3 sessions x 201 -- 59,094 trials, 294 sessions
+- **PASS** harmonized table is non-empty -- 600,611 rows
 - **PASS** kool_daw: subject count -- 206 (expected 206)
 - **PASS** kool_daw: every subject has 125 trials, apart from 0 documented exception(s) -- all equal
 - **PASS** kool_daw: common-transition rate ~ 0.70 -- 0.7001
@@ -69,3 +78,4 @@ in a column mapping shows up as a numeric mismatch rather than passing quietly.
 | kool_novel | 199 | 8.5 | 15 (7.5%) | n/a | n/a |
 | gillan_study1 | 649 | 2.8 | 4 (0.6%) | +0.240 | +0.100 |
 | gillan_study2 | 1712 | 4.1 | 32 (1.9%) | +0.224 | +0.093 |
+| gilger | 387 | 10.2 | 22 (5.7%) | +0.186 | +0.141 |

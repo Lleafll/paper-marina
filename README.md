@@ -26,7 +26,7 @@ This repository answers three questions about the datasets in `mail.txt`:
 | Kool `daw paradigm` | Kool, Cushman & Gershman (2016), PLoS Comput Biol 12:e1005090 | [GitHub](https://github.com/wkool/tradeoffs) | yes |
 | Kool `novel paradigm` | same | same | yes, but **not poolable** — a different task |
 | Gillan study 1 + 2 | Gillan et al. (2016), eLife 5:e11305 | [OSF usdgt](https://osf.io/usdgt/) | yes |
-| Gilger et al. | Gilger et al. (2024), J Psychopharmacol 38:178-187 | **no** — no data-availability statement | raw logfiles from the lab share (internal); not yet extracted |
+| Gilger et al. | Gilger et al. (2024), J Psychopharmacol 38:178-187 | **no** — no data-availability statement | raw logfiles from the lab share (internal); extracted |
 
 ## Layout
 
@@ -56,6 +56,8 @@ python3 -m venv .venv
 .venv/bin/python -m src.fetch            # refresh sources/ (a no-op once populated)
 .venv/bin/python -m src.extract_kool     # data.mat  -> named CSVs
 .venv/bin/python -m src.extract_gillan   # OSF CSVs  -> named CSVs
+.venv/bin/python -m src.extract_gilger   # study-030 logfiles -> named CSVs
+.venv/bin/python -m src.fit_gilger       # MF/MB effects + 7-parameter hybrid fits (~9 min)
 .venv/bin/python -m src.harmonize        # -> one cross-dataset table
 .venv/bin/python -m src.validate         # check it against the authors' own output
 ```
@@ -88,6 +90,11 @@ flags added):
 | `gillan_study2_trials.csv` | 1712 subjects x 200 trials (one subject has 199) |
 | `gillan_*_subjects.csv` | per subject: counts, demographics, questionnaire totals, factor scores |
 | `gillan_study2_items.csv`, `gillan_factor_weights.csv` | 209 individual items, and the item x factor scoring matrix |
+| `gilger_trials.csv` | 387 sessions x 201 trials (153 subjects; condition still blinded) |
+| `gilger_trials_final_sample.csv` | the same, restricted to the 98 analysed subjects: 294 sessions x 201 = 59,094 trials |
+| `gilger_stay_effects.csv`, `gilger_model_fits_session_<prior>.csv` | per session: stay probabilities, MF / MB effects, and the 7 hybrid-model parameters |
+| `gilger_subject_means_<prior>.csv` | per subject: the same, averaged over the three tryptophan sessions |
+| `gilger_sessions.csv`, `gilger_subjects.csv` | per logfile: missed trials and integrity checks; per subject: completion and exclusion flags |
 
 **Harmonized across datasets** ([schema](docs/codebook_harmonized.md)):
 
@@ -100,7 +107,7 @@ flags added):
 
 Each check recomputes something whose correct answer is known independently of this
 repository, so a mistake in a column mapping shows up as a numeric mismatch instead of
-passing quietly. Currently **51 checks, 0 failures**
+passing quietly. Currently **60 checks, 0 failures**
 ([report](docs/validation_report.md)):
 
 * the per-subject stay probabilities, MB/MF indices, reward rates, mean reward
