@@ -18,6 +18,7 @@ This is not uniform across the three sources, so it is recorded per item.
 | Gilger et al. (2024) paper | **CC-BY** (SAGE open access) | yes, with attribution |
 | `kool2016/repo/` (data, code, task) | **none stated** — the GitHub repository has no LICENSE file | unclear |
 | `gillan2016/osf/` (data) | **none stated** — the OSF project has no licence set (`node_license: null`) | unclear |
+| `gilger2024/data/` (study-030 logfiles) | **unpublished** — internal participant data from the Dresden lab share | **no** |
 
 The two datasets are publicly posted but carry **no explicit grant of
 redistribution**. Mirroring them for one's own analysis is routine academic practice
@@ -99,11 +100,13 @@ Psychopharmacology 38(2):178–187. <https://doi.org/10.1177/02698811231216325>
 paper/gilger2024-jpsychopharmacol.pdf   the paper (10 pp) — added by hand
 paper/fulltext.xml                      machine-readable full text (EuropePMC, PMC10863371)
 paper/README.md                         how to obtain the missing supplement
-data/README.md                          the data is not public; what to request
+data/                                   study-030 logfiles from the lab share (internal)
 ```
 
-**No data.** The article has no data-availability statement and its only supplement is
-a PDF; the trial-level data has to come from the authors. See
+**No public data.** The article has no data-availability statement and its only
+supplement is a PDF. `data/` now holds the study-030 logfiles copied from the Dresden
+lab share on 17 Nov 2026. They are internal, so **not redistributable**;
+`data/README.md` records what was copied and how it was checked. See
 `docs/codebook_gilger.md`, which identifies the model they used (the Daw 2011 hybrid
 in its 7-parameter form) from the Methods text.
 

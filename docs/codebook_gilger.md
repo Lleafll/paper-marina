@@ -7,12 +7,20 @@ Psychopharmacology 38(2):178–187. <https://doi.org/10.1177/02698811231216325>
 Open access (CC-BY); full text also at
 [PMC10863371](https://pmc.ncbi.nlm.nih.gov/articles/PMC10863371/).
 
-## Status: not obtainable from the publication
+## Status: raw logfiles obtained (17 Nov 2026), not yet extracted
 
 The article carries **no data-availability statement** and its only supplement is a
 PDF (`sj-pdf-1-jop-10.1177_02698811231216325.pdf`, SAGE blocks automated download).
-There is no OSF, GitHub or OpARA deposit. The trial-level data and the fitting script
-have to come from the authors (Smolka lab, TU Dresden).
+There is no OSF, GitHub or OpARA deposit.
+
+The study-030 Psychtoolbox logfiles have since been copied from the lab share into
+`sources/gilger2024/data/` (internal, not for redistribution). They match the design
+below in every checked respect: 201 trials, 70/30 transitions, 2 s deadline, reward
+walks in [0.25, 0.75], 109 subjects with three scanner sessions. The variable coding,
+the counterbalancing and the open anomalies are documented in
+[`sources/gilger2024/data/README.md`](../sources/gilger2024/data/README.md). Still
+missing: the **tryptophan-condition key** (the logfiles are blinded) and the fitting
+script.
 
 ## Which model produced the published parameters
 
@@ -77,9 +85,9 @@ so once the data arrives it maps onto the harmonized schema directly.
 
 ## Wiring it up
 
-`src/extract_gilger.py` is a documented stub. When the files arrive:
+`src/extract_gilger.py` is a documented stub. To finish it:
 
-1. put them under `data/raw/gilger/`;
+1. read the logfiles from `sources/gilger2024/data/Files_with_Timestamp/`;
 2. implement `write_trials()` so it emits `data/processed/gilger_trials.csv` with the
    columns listed in `EXPECTED_COLUMNS` in that module -- they are already the
    canonical names:
@@ -91,9 +99,10 @@ so once the data arrives it maps onto the harmonized schema directly.
    `session` 1–3 keeps the three tryptophan conditions as separate rows in the
    subject-level table.
 
-Two coding decisions to confirm against the Dresden script when it arrives, because
-both differ across the existing datasets:
+The two coding questions that differ across the existing datasets are answered by
+the logfiles themselves:
 
-* how timeouts are flagged, and whether timed-out trials are present at all;
-* whether the second-stage state is labelled 1/2 (as Kool) or 2/3 (as Gillan), and
-  whether second-stage choices are numbered within state (1/2) or globally (1–4).
+* timed-out trials are present: `NaN` choice and RT, `R = 0`, and after a stage-1
+  timeout `S(2,t) = 0` and `A(2,t) = 0`, while `trans(t)` is still filled in;
+* the second-stage state is labelled **2/3** (as Gillan), and second-stage choices
+  are numbered **within state** (1/2).

@@ -26,7 +26,7 @@ This repository answers three questions about the datasets in `mail.txt`:
 | Kool `daw paradigm` | Kool, Cushman & Gershman (2016), PLoS Comput Biol 12:e1005090 | [GitHub](https://github.com/wkool/tradeoffs) | yes |
 | Kool `novel paradigm` | same | same | yes, but **not poolable** — a different task |
 | Gillan study 1 + 2 | Gillan et al. (2016), eLife 5:e11305 | [OSF usdgt](https://osf.io/usdgt/) | yes |
-| Gilger et al. | Gilger et al. (2024), J Psychopharmacol 38:178-187 | **no** — no data-availability statement | paper only; documented slot for the data |
+| Gilger et al. | Gilger et al. (2024), J Psychopharmacol 38:178-187 | **no** — no data-availability statement | raw logfiles from the lab share (internal); not yet extracted |
 
 ## Layout
 
@@ -34,7 +34,7 @@ This repository answers three questions about the datasets in `mail.txt`:
 sources/        the original material, as published -- committed
   kool2016/     paper + 6 supplements + the complete wkool/tradeoffs repo @ 6f849e13
   gillan2016/   paper + 5 supplements + the complete osf.io/usdgt project
-  gilger2024/   paper + full text; no data (not public)
+  gilger2024/   paper + full text + study-030 logfiles from the lab share (internal)
   README.md     provenance and per-item licence status -- read before redistributing
   MANIFEST.tsv  size, SHA-256 and origin URL of all 2,545 vendored files
 src/            the pipeline
